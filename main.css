@@ -1,0 +1,37 @@
+#main-board {
+    background-color: yellow;
+    height : 100vh; 
+    position:relative;
+    border: 1px solid black; 
+    
+
+}
+
+h1 {
+    font-size: 60px;
+    font-weight: 700;
+    font-family: Helvetica;
+    color: black;
+    text-align: center;
+    padding : 30px;
+}
+
+p {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: Helvetica;
+    color: black;
+    text-align: left;
+    padding : 20px;
+    
+
+}
+
+.cat { 
+    
+    background-color: white;
+    width: 120px;
+    height: 50px;
+    position :absolute;
+    
+} 
