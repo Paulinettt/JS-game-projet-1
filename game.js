@@ -1,11 +1,10 @@
 class Cat {
  constructor() {
-     this.x = 30;
+     this.x = 40;
      this.y = 50;
      this.height = 10;
      this.width = 10;
      this.create = create;
-     this.domCat = null;
      
      
  }
@@ -69,17 +68,41 @@ document.addEventListener("keydown", function (event) {  //moving the cat around
 
 
 
-class Obstacle { //different kinds of obstacles if time
+class Asteroid { //different kinds of obstacles 
    constructor(){
-    this.x = 30;
-    this.y = 50;
-    this.height = 10;
-    this.width = 10;
+    this.x = 90;
+    this.y = Math.floor(Math.random() * 100);
+    this.height = 50;
+    this.width = 30;
+    //this.create = create;
 
    }
     
+    rightToLeft() {
+    this.x--;
+} 
+
+ 
+
+}
 
 
+class Fish {
+   constructor() {
+    this.x = 90;
+    this.y = Math.floor(Math.random() * 100);
+    this.height = 30;
+    this.width = 40;
+    this.FishArr = [];
+    this.create = create;
+
+   }
+
+
+   rightToLeft() {
+    this.x--;
+    console.log
+} 
 
 
 }
@@ -91,9 +114,11 @@ class Obstacle { //different kinds of obstacles if time
 class Game {
     constructor (createEl){
         this.time = 0;
-        this.obstacles = [];
+        this.AstArr = [];
+        this.FishArr = [];
         this.create = createEl;
         this.cat = null;
+        
       
         
 
@@ -101,13 +126,60 @@ class Game {
   
    startGame () {
         this.cat = new Cat(); 
-        this.cat.domCat = this.create ("cat"); // dom elm created
+        this.cat.domCat = this.create ("cat"); //create cat in the DOM
         this.drawCat ();
-        //create character
-         //start countdown
-         //start obstacles
+       
+         //set countdown before obstacles?
+         
+
+         
+         
+
   
    }
+
+   startObstacles (){
+            
+   console.log("start obstacles works")
+
+        this.asteroid = new Asteroid ()
+        this.asteroid.domObst = this.create ("asteroid");  // asteroid in the DOM
+        
+
+        this.fish = new Fish ()
+        this.fish.domObst = this.create("fish");  // fish in the DOM
+         
+   
+        this.myInterval = setInterval ( () => { 
+        
+        
+            this.FishArr.forEach( (fish) => {
+            
+                this.drawFish();                  //move asteroids and fish
+                this.drawAsteroid();
+               fish.rightToLeft();
+                
+           
+        });
+    
+        if (this.time % 30 === 0) {
+           
+          this.FishArr.push(this.asteroid);
+          this.FishArr.push(this.fish);
+    
+        } else if (this.time % 20 === 0)
+         {
+            this.FishArr.push(this.asteroid);
+         }
+    
+        this.time++;
+    
+     }, 1000) ;  
+
+
+} 
+
+
 
 
 
@@ -132,23 +204,35 @@ class Game {
  drawCat () {
      this.cat.domCat.style.left = this.cat.x + "%";
      this.cat.domCat.style.bottom = this.cat.y + "%"; 
-
+     
 }
 
+drawAsteroid () {
+    this.asteroid.domObst.style.left = this.asteroid.x + "%";
+    this.asteroid.domObst.style.bottom = this.asteroid.y + "%"; 
+    console.log("drawasteroid")
 
 
-//logic move and create
-}
-
- /* function moveElm (element){ //to modify css (html element)
-    console.log(element);   
 } 
- */
+
+drawFish () {
+    this.fish.domObst.style.left = this.fish.x + "%";
+    this.fish.domObst.style.bottom = this.fish.y + "%";
+    console.log ("drawfish")
+}
+ 
+
 
   
 
+}
 
-function create (className) { //to create obstacle and cat element
+
+
+//create elements
+
+
+function create (className) { //reate obstacle and cat 
     const mainBoard = document.getElementById("main-board");
     const newElm = document.createElement("div");
    
@@ -158,8 +242,15 @@ function create (className) { //to create obstacle and cat element
     
  }
 
-const game = new Game (create); //create cat and obstacle
+ //start game + obstacles
+
+const game = new Game (create); 
 game.startGame ();
+game.startObstacles();
+
+
+
+
 
 
 
