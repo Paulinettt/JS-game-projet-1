@@ -5,6 +5,7 @@ class Cat {
      this.height = 10;
      this.width = 10;
      this.create = create;
+     this.domCat = null;
      
      
  }
@@ -45,19 +46,19 @@ document.addEventListener("keydown", function (event) {  //moving the cat around
     switch(event.key){
        case "ArrowRight":
            game.moveCat ("right");
-           console.log ("right")
+           
            break;   
        case "ArrowLeft":
            game.moveCat ("left");
-           console.log ("left")
+           
            break;
        case "ArrowDown":
            game.moveCat ("down");
-           console.log ("down")
+           
            break;
        case "ArrowUp":
            game.moveCat ("up");
-           console.log ("up")
+           
            break;       
    }
 
@@ -86,57 +87,78 @@ class Obstacle { //different kinds of obstacles if time
 
 
 
+
 class Game {
     constructor (createEl){
         this.time = 0;
         this.obstacles = [];
         this.create = createEl;
+        this.cat = null;
       
         
-        
-
 
     }
   
    startGame () {
         this.cat = new Cat(); 
-        this.create ("cat");
+        this.cat.domCat = this.create ("cat"); // dom elm created
+        this.drawCat ();
         //create character
-
          //start countdown
+         //start obstacles
+  
    }
-
-
-
 
 
 
  moveCat(direction) {
     if(direction === "left"){
         this.cat.moveLeft();
+        
     } else if (direction === "right"){
         this.cat.moveRight();
+        
     } else if (direction === "up") {
         this.cat.moveUp();
+
     } else if (direction === "down") {
         this.cat.moveDown();
     }
+        this.drawCat();
     
 }
+
+
+ drawCat () {
+     this.cat.domCat.style.left = this.cat.x + "%";
+     this.cat.domCat.style.bottom = this.cat.y + "%"; 
+
 }
 
 
 
-function create (className) {
+//logic move and create
+}
+
+ /* function moveElm (element){ //to modify css (html element)
+    console.log(element);   
+} 
+ */
+
+  
+
+
+function create (className) { //to create obstacle and cat element
     const mainBoard = document.getElementById("main-board");
     const newElm = document.createElement("div");
    
     newElm.className = className;
     mainBoard.appendChild(newElm);
+    return newElm;
     
  }
 
-const game = new Game (create); 
+const game = new Game (create); //create cat and obstacle
 game.startGame ();
 
 
