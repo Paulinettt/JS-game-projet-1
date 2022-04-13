@@ -36,6 +36,7 @@ moveUp () {
 }
 
 
+
 }
 
 
@@ -83,10 +84,13 @@ class Asteroid { //obstacle game over
     if (this.x < 0 ){
         this.astArr.shift() 
         this.domObst.remove() //remove from the dom 
-    }
+    
+     } 
+    
+   }
 
-} 
-
+  //detectcollisionwithcat here?
+   
 }
 
 
@@ -97,7 +101,7 @@ class Fish { //obstacle +1 point
     this.height = 20;
     this.width = 20;
     this.fishArr = [];
-
+    
 
    }
 
@@ -116,13 +120,16 @@ class Fish { //obstacle +1 point
 } 
 
 
+ //detectcollisionwithcat here?
+
+
 }
 
 
 // SET TIMER 
 
 
-var timeLeft = 20 //seconds
+var timeLeft = 30 //seconds
 
     let counter = document.getElementById("timer")
 
@@ -164,13 +171,13 @@ var timeLeft = 20 //seconds
 
         totalScore.innerHTML = score;
 
-        if (score === 10) {
+        if (score === 30) {
             console.log("Niiiice!")
             //end game and take to winner page 
           
              //alert("YOU WON!");
 
-            document.location.reload();
+            //document.location.reload();
 
             
         }
@@ -185,7 +192,7 @@ class Game {
         this.astArr = [];
         this.fishArr = [];
         this.create = createEl;
-        //this.cat = null;
+        
     }
   
    startGame () {
@@ -227,18 +234,21 @@ class Game {
          this.fishArr.forEach( (fish) => {  
             fish.moveFish(); 
             this.drawFish(fish);
-            fish.deleteFishOffScreen ()  
+            fish.deleteFishOffScreen ();
+            this.detectCollisionWithCat(fish);
+            
         });
 
         this.astArr.forEach( (asteroid) => {  
             asteroid.moveAsteroid();
             this.drawAsteroid(asteroid); 
-            asteroid.deleteAsteroidOffScreen () ;        
+            asteroid.deleteAsteroidOffScreen () ; 
+                   
         });
     
         this.time++;
     
-     }, 100) ;  
+     }, 300) ;  
 
 
 } 
@@ -260,6 +270,39 @@ class Game {
         this.drawCat();
     
 }
+
+ detectCollisionWithCat(fish){
+
+    console.log ("collision")
+        
+    if (this.cat.x < fish.x + fish.width &&
+        this.cat.x + this.cat.width > fish.x &&
+        this.cat.y < fish.y + fish.height &&
+        this.cat.height + this.cat.y > fish.y) {
+      console.log ("postcollision")
+            this.fishArr.shift();
+            fish.domObst.remove();
+            countPoints();
+            
+
+}
+}  
+
+   gameOverCollision (asteroid){
+    if (this.cat.x < asteroid.x + asteroid.width &&
+        this.cat.x + this.cat.width > asteroid.x &&
+        this.cat.y < asteroid.y + asteroid.height &&
+        this.cat.height + this.cat.y > asteroid.y) {
+
+            this.astArr.shift();
+            asteroid.domObst.remove();
+            alert("You're hit!");
+
+}
+
+
+}
+ 
 
 
  drawCat () {
