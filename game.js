@@ -4,8 +4,7 @@ class Cat {
      this.y = 50;
      this.height = 10;
      this.width = 10;
-     this.create = create;
-     
+     this.create = create; 
      
  }
 
@@ -68,13 +67,13 @@ document.addEventListener("keydown", function (event) {  //moving the cat around
 
 
 
-class Asteroid { //different kinds of obstacles 
+class Asteroid { //obstacle
    constructor(){
-    this.x = 90;
-    this.y = Math.floor(Math.random() * 100);
+    this.x = 95;
+    this.y = Math.floor(Math.random() * 80);
     this.height = 50;
     this.width = 30;
-    //this.create = create;
+    
 
    }
     
@@ -87,25 +86,86 @@ class Asteroid { //different kinds of obstacles
 }
 
 
-class Fish {
+class Fish { //obstacle
    constructor() {
-    this.x = 90;
-    this.y = Math.floor(Math.random() * 100);
+    this.x = 95;
+    this.y = Math.floor(Math.random() * 80);
     this.height = 30;
     this.width = 40;
-    this.FishArr = [];
-    this.create = create;
+    this.fishArr = [];
+    //this.create = create;
 
    }
 
 
    rightToLeft() {
     this.x--;
-    console.log
+    
 } 
 
 
 }
+
+//timer + score
+
+
+var timeLeft = 40 //seconds
+
+    let counter = document.getElementById("timer")
+
+    function updateTimer() {
+        timeLeft = timeLeft - 1;
+        if(timeLeft >= 0)
+        counter.innerHTML = timeLeft
+        else {
+            //remove obstacles and open new page?
+    
+            //delete all obstacles?
+           
+            console.log ("you're out of time and out of fish!")
+            alert("Too Late!");
+
+            document.location.reload();
+            
+        }
+      }
+
+      function startTimer() {
+        // setInterval will call updateTimer
+       
+        timer = setInterval(updateTimer, 1000);
+        
+        updateTimer();
+        
+      }
+
+      startTimer()
+      updateTimer()
+
+
+
+      let totalScore = document.getElementById("total-points")
+      var score = 0;
+
+      function countPoints() {
+
+        score++;
+
+        totalScore.innerHTML = score;
+
+        if (score === 10) {
+            console.log("Niiiice!")
+            //end game and take to another page 
+          
+             alert("YOU WON!");
+
+            document.location.reload();
+
+            //clearInterval
+            
+            
+        }
+    }
 
 
 
@@ -115,11 +175,10 @@ class Game {
     constructor (createEl){
         this.time = 0;
         this.AstArr = [];
-        this.FishArr = [];
+        this.fishArr = [];
         this.create = createEl;
         this.cat = null;
         
-      
         
 
     }
@@ -142,42 +201,66 @@ class Game {
             
    console.log("start obstacles works")
 
-        this.asteroid = new Asteroid ()
-        this.asteroid.domObst = this.create ("asteroid");  // asteroid in the DOM
+         // asteroid in the DOM
         
 
-        this.fish = new Fish ()
-        this.fish.domObst = this.create("fish");  // fish in the DOM
+         // fish in the DOM
          
    
         this.myInterval = setInterval ( () => { 
         
         
-            this.FishArr.forEach( (fish) => {
-            
-                this.drawFish();                  //move asteroids and fish
-                this.drawAsteroid();
-               fish.rightToLeft();
+            this.fishArr.forEach( (fish) => {  
+                //fish.rightToLeft();
+                //asteroid.rightToLeft();
+                this.fish = new Fish ()
+                this.fish.domObst = this.create("fish"); 
+                this.asteroid = new Asteroid ()
+                this.asteroid.domObst = this.create ("asteroid"); 
+                this.drawFish();     
+                this.drawAsteroid();             
+                
+                this.deleteAsteroidOffScreen ();
+                this.deleteFishOffScreen();
+               
                 
            
         });
     
-        if (this.time % 30 === 0) {
+        if (this.time % 20 === 0) {
            
-          this.FishArr.push(this.asteroid);
-          this.FishArr.push(this.fish);
+          this.fishArr.push(this.fish);
+          
     
-        } else if (this.time % 20 === 0)
-         {
-            this.FishArr.push(this.asteroid);
+        } else if (this.time % 40 === 0) { 
+         
+            this.fishArr.push(this.asteroid);
+            
          }
     
         this.time++;
     
-     }, 1000) ;  
+     }, 2000) ;  
 
 
 } 
+
+deleteAsteroidOffScreen () {   
+    if (this.asteroid.x < 0 ){
+        
+        this.fishArr.shift() //remove from array
+        this.asteroid.domObst.remove() //remove from the dom 
+    }
+
+}
+
+deleteFishOffScreen () {
+    if (this.fish.x < 0 ){
+        
+        this.fishArr.shift() //remove from array
+        this.fish.domObst.remove() //remove from the dom 
+    }
+}
 
 
 
