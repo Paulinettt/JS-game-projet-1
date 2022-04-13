@@ -5,7 +5,6 @@ class Cat {
      this.height = 10;
      this.width = 10;
      
-     
  }
 
  moveLeft() {
@@ -39,30 +38,27 @@ moveUp () {
 
 }
 
-document.addEventListener("keydown", function (event) {  //moving the cat around
+
+//MOVING THE CAT
+
+document.addEventListener("keydown", function (event) {  
 
     switch(event.key){
        case "ArrowRight":
            game.moveCat ("right");
-           
            break;   
        case "ArrowLeft":
            game.moveCat ("left");
-           
            break;
        case "ArrowDown":
            game.moveCat ("down");
-           
            break;
        case "ArrowUp":
            game.moveCat ("up");
-           
            break;       
    }
 
 }); 
-
-
 
 
 
@@ -73,6 +69,7 @@ class Asteroid { //obstacle game over
     this.y = Math.floor(Math.random() * 80);
     this.height = 20;
     this.width = 20;
+    this.astArr = [];
     
 
    }
@@ -82,7 +79,13 @@ class Asteroid { //obstacle game over
     console.log("moveaster")
 } 
 
- 
+    deleteAsteroidOffScreen () {   
+    if (this.x < 0 ){
+        this.astArr.shift() 
+        this.domObst.remove() //remove from the dom 
+    }
+
+} 
 
 }
 
@@ -93,8 +96,8 @@ class Fish { //obstacle +1 point
     this.y = Math.floor(Math.random() * 80);
     this.height = 20;
     this.width = 20;
-    this.domObst = null;
-   
+    this.fishArr = [];
+
 
    }
 
@@ -105,14 +108,21 @@ class Fish { //obstacle +1 point
     
 } 
 
+    deleteFishOffScreen () {
+    if (this.x < 0 ){
+        this.fishArr.shift() 
+        this.domObst.remove() //remove from the dom 
+    }
+} 
+
 
 }
 
 
-//timer + score
+// SET TIMER 
 
 
-var timeLeft = 40 //seconds
+var timeLeft = 20 //seconds
 
     let counter = document.getElementById("timer")
 
@@ -126,25 +136,24 @@ var timeLeft = 40 //seconds
            
             console.log ("Out of time and out of fish!")
             alert("Time's Up!");
-
-            document.location.reload();
+            //document.location.reload();
             
         }
       }
+
 
       function startTimer() {
         // setInterval will call updateTimer
        
         timer = setInterval(updateTimer, 1000);
-        
         updateTimer();
-        
       }
 
       startTimer()
       updateTimer()
 
-     //score count
+
+     // SET SCORE
 
       let totalScore = document.getElementById("total-points")
       var score = 0;
@@ -157,18 +166,15 @@ var timeLeft = 40 //seconds
 
         if (score === 10) {
             console.log("Niiiice!")
-            //end game and take to another page 
+            //end game and take to winner page 
           
-             alert("YOU WON!");
+             //alert("YOU WON!");
 
             document.location.reload();
 
-            //clearInterval?
-            
             
         }
     }
-
 
 
 
@@ -179,32 +185,29 @@ class Game {
         this.astArr = [];
         this.fishArr = [];
         this.create = createEl;
-        this.cat = null;
+        //this.cat = null;
     }
   
    startGame () {
         this.cat = new Cat(); 
-        this.cat.domCat = this.create ("cat"); //create cat in the DOM
+        this.cat.domCat = this.create ("cat"); //cat in the DOM
         this.drawCat ();
        
          //set countdown before obstacles?
          
 
-    this.startObstacles()
+         this.startObstacles()
   
    }
 
-   startObstacles (){
+
+
+
+    startObstacles (){
             
-   console.log("start obstacles works")
-
-         // asteroid in the DOM
-        
-
-         // fish in the DOM
-         
+     console.log("start obstacles works")
    
-        this.myInterval = setInterval ( () => { 
+         setInterval ( () => { 
         
     
         if (this.time % 20 === 0) {
@@ -217,20 +220,21 @@ class Game {
             const asteroid = new Asteroid ()
             asteroid.domObst = this.create ("asteroid");
             this.astArr.push(asteroid); 
+            
          }
 
 
          this.fishArr.forEach( (fish) => {  
             fish.moveFish(); 
-            this.drawFish(fish);  
+            this.drawFish(fish);
+            fish.deleteFishOffScreen ()  
         });
 
         this.astArr.forEach( (asteroid) => {  
             asteroid.moveAsteroid();
-            this.drawAsteroid(asteroid);          
+            this.drawAsteroid(asteroid); 
+            asteroid.deleteAsteroidOffScreen () ;        
         });
-
-
     
         this.time++;
     
@@ -238,27 +242,6 @@ class Game {
 
 
 } 
-
-
-
-/* deleteAsteroidOffScreen () {   
-    if (this.asteroid.x < 0 ){
-        
-        this.fishArr.shift() //remove from array
-        this.asteroid.domObst.remove() //remove from the dom 
-    }
-
-} */
-
-/* deleteFishOffScreen () {
-    if (this.fish.x < 0 ){
-        
-        this.fishArr.shift() //remove from array
-        this.fish.domObst.remove() //remove from the dom 
-    }
-} */
-
-
 
 
  moveCat(direction) {
@@ -289,8 +272,6 @@ drawAsteroid (asteroid) {
     asteroid.domObst.style.left = asteroid.x + "%";
     asteroid.domObst.style.bottom = asteroid.y + "%"; 
     console.log("drawasteroid")
-
-
 } 
 
 drawFish (fish) {
@@ -298,22 +279,17 @@ drawFish (fish) {
     fish.domObst.style.bottom = fish.y + "%";
     console.log ("drawfish")
 }
- 
-
-
   
 
 }
 
 
+// CREATE ELEMENTS
 
-//create elements
 
-
-function create (className) { //create asteroid/fish and cat 
+    function create (className) { //asteroid/fish/cat 
     const mainBoard = document.getElementById("main-board");
     const newElm = document.createElement("div");
-   
     newElm.className = className;
     mainBoard.appendChild(newElm);
     return newElm;
@@ -321,7 +297,7 @@ function create (className) { //create asteroid/fish and cat
  }
 
 
- //start game + obstacles
+ //START GAME
 
 const game = new Game (create); 
 game.startGame ();
