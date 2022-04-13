@@ -4,7 +4,7 @@ class Cat {
      this.y = 50;
      this.height = 10;
      this.width = 10;
-     this.create = create; 
+     
      
  }
 
@@ -67,18 +67,19 @@ document.addEventListener("keydown", function (event) {  //moving the cat around
 
 
 
-class Asteroid { //obstacle
+class Asteroid { //obstacle game over
    constructor(){
     this.x = 95;
     this.y = Math.floor(Math.random() * 80);
-    this.height = 50;
-    this.width = 30;
+    this.height = 20;
+    this.width = 20;
     
 
    }
     
-    rightToLeft() {
+    moveAsteroid() {
     this.x--;
+    console.log("moveaster")
 } 
 
  
@@ -86,25 +87,27 @@ class Asteroid { //obstacle
 }
 
 
-class Fish { //obstacle
+class Fish { //obstacle +1 point
    constructor() {
     this.x = 95;
     this.y = Math.floor(Math.random() * 80);
-    this.height = 30;
-    this.width = 40;
-    this.fishArr = [];
-    //this.create = create;
+    this.height = 20;
+    this.width = 20;
+    this.domObst = null;
+   
 
    }
 
 
-   rightToLeft() {
+   moveFish() {
     this.x--;
+    console.log("movefish")
     
 } 
 
 
 }
+
 
 //timer + score
 
@@ -118,12 +121,11 @@ var timeLeft = 40 //seconds
         if(timeLeft >= 0)
         counter.innerHTML = timeLeft
         else {
-            //remove obstacles and open new page?
-    
+            //remove obstacles and game over?
             //delete all obstacles?
            
-            console.log ("you're out of time and out of fish!")
-            alert("Too Late!");
+            console.log ("Out of time and out of fish!")
+            alert("Time's Up!");
 
             document.location.reload();
             
@@ -142,7 +144,7 @@ var timeLeft = 40 //seconds
       startTimer()
       updateTimer()
 
-
+     //score count
 
       let totalScore = document.getElementById("total-points")
       var score = 0;
@@ -161,7 +163,7 @@ var timeLeft = 40 //seconds
 
             document.location.reload();
 
-            //clearInterval
+            //clearInterval?
             
             
         }
@@ -174,13 +176,10 @@ var timeLeft = 40 //seconds
 class Game {
     constructor (createEl){
         this.time = 0;
-        this.AstArr = [];
+        this.astArr = [];
         this.fishArr = [];
         this.create = createEl;
         this.cat = null;
-        
-        
-
     }
   
    startGame () {
@@ -191,9 +190,7 @@ class Game {
          //set countdown before obstacles?
          
 
-         
-         
-
+    this.startObstacles()
   
    }
 
@@ -209,59 +206,57 @@ class Game {
    
         this.myInterval = setInterval ( () => { 
         
-        
-            this.fishArr.forEach( (fish) => {  
-                //fish.rightToLeft();
-                //asteroid.rightToLeft();
-                this.fish = new Fish ()
-                this.fish.domObst = this.create("fish"); 
-                this.asteroid = new Asteroid ()
-                this.asteroid.domObst = this.create ("asteroid"); 
-                this.drawFish();     
-                this.drawAsteroid();             
-                
-                this.deleteAsteroidOffScreen ();
-                this.deleteFishOffScreen();
-               
-                
-           
-        });
     
         if (this.time % 20 === 0) {
-           
-          this.fishArr.push(this.fish);
-          
-    
-        } else if (this.time % 40 === 0) { 
-         
-            this.fishArr.push(this.asteroid);
-            
+            const fish = new Fish ()
+            fish.domObst = this.create("fish");
+            this.fishArr.push(fish);
+        }
+
+        if (this.time % 40 === 0) { 
+            const asteroid = new Asteroid ()
+            asteroid.domObst = this.create ("asteroid");
+            this.astArr.push(asteroid); 
          }
+
+
+         this.fishArr.forEach( (fish) => {  
+            fish.moveFish(); 
+            this.drawFish(fish);  
+        });
+
+        this.astArr.forEach( (asteroid) => {  
+            asteroid.moveAsteroid();
+            this.drawAsteroid(asteroid);          
+        });
+
+
     
         this.time++;
     
-     }, 2000) ;  
+     }, 100) ;  
 
 
 } 
 
-deleteAsteroidOffScreen () {   
+
+
+/* deleteAsteroidOffScreen () {   
     if (this.asteroid.x < 0 ){
         
         this.fishArr.shift() //remove from array
         this.asteroid.domObst.remove() //remove from the dom 
     }
 
-}
+} */
 
-deleteFishOffScreen () {
+/* deleteFishOffScreen () {
     if (this.fish.x < 0 ){
         
         this.fishArr.shift() //remove from array
         this.fish.domObst.remove() //remove from the dom 
     }
-}
-
+} */
 
 
 
@@ -290,17 +285,17 @@ deleteFishOffScreen () {
      
 }
 
-drawAsteroid () {
-    this.asteroid.domObst.style.left = this.asteroid.x + "%";
-    this.asteroid.domObst.style.bottom = this.asteroid.y + "%"; 
+drawAsteroid (asteroid) {
+    asteroid.domObst.style.left = asteroid.x + "%";
+    asteroid.domObst.style.bottom = asteroid.y + "%"; 
     console.log("drawasteroid")
 
 
 } 
 
-drawFish () {
-    this.fish.domObst.style.left = this.fish.x + "%";
-    this.fish.domObst.style.bottom = this.fish.y + "%";
+drawFish (fish) {
+    fish.domObst.style.left = fish.x + "%";
+    fish.domObst.style.bottom = fish.y + "%";
     console.log ("drawfish")
 }
  
@@ -315,7 +310,7 @@ drawFish () {
 //create elements
 
 
-function create (className) { //reate obstacle and cat 
+function create (className) { //create asteroid/fish and cat 
     const mainBoard = document.getElementById("main-board");
     const newElm = document.createElement("div");
    
@@ -325,11 +320,12 @@ function create (className) { //reate obstacle and cat
     
  }
 
+
  //start game + obstacles
 
 const game = new Game (create); 
 game.startGame ();
-game.startObstacles();
+
 
 
 
