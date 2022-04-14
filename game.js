@@ -166,16 +166,11 @@ var timeLeft = 20 //seconds
         else {
             //remove obstacles and game over?
             //delete all obstacles?
-           
-            console.log ("Out of time and out of fish!")
-            
-            
-            
             //clearInterval(game.obstLoop);
 
-            
+            endGamePage();
             //alert("Time's Up!");
-            window.open('./game-over.html', 'self');
+            //window.open('./game-over.html', 'self');
             //document.location.reload();
             
         }
