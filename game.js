@@ -4,6 +4,7 @@
 
 const mainTune = new Audio('./ressources/main-tune.mp3')
 mainTune.loop = true;
+mainTune.volume = 0.4;
 mainTune.play();
 
 
@@ -15,6 +16,10 @@ const oups = new Audio('./ressources/oups.wav')
 const gameOverSong = new Audio ('./ressources/game-over song.mp3')
 const applause = new Audio ('./ressources/applause.wav')
 
+
+
+//const gameoverPage = document.getElementById("gameover")
+//const gameBoard = document.querySelector("#main-board")
 
 //GAME IMAGES
 
@@ -143,21 +148,14 @@ class Fish { //obstacle +1 point
         this.fishArr.shift() 
         this.domObst.remove() //remove from the dom 
     }
-} 
-
-   
-
-
- //detectcollisionwithcat here?
-
-
 }
 
+}
 
 // SET TIMER 
 
 
-var timeLeft = 30 //seconds
+var timeLeft = 20 //seconds
 
     let counter = document.getElementById("timer")
 
@@ -173,7 +171,7 @@ var timeLeft = 30 //seconds
             
             
             
-            clearInterval(game.obstLoop);
+            //clearInterval(game.obstLoop);
 
             
             //alert("Time's Up!");
@@ -207,23 +205,28 @@ var timeLeft = 30 //seconds
         totalScore.innerHTML = score;
 
         if (score === 3) {
-            console.log("Niiiice!")
+            
 
-            applause.play();
+            meow.play();
             
             //end game and take to winner page 
-            clearInterval(timer);
-             alert("YOU WON!");
-             //meow.play();
+            winPage();
+             
 
-            document.location.reload();
+            //document.location.reload();
 
             
         }
     }
 
     
-      
+    function endGamePage() {
+        location.replace("./game-over.html")
+      }
+
+      function winPage() {
+        location.replace("./win-page.html")
+      }
     
 
 class Game {
@@ -241,7 +244,8 @@ class Game {
         this.cat = new Cat(); 
         this.cat.domCat = this.create ("cat"); //cat in the DOM
         this.drawCat ();
-       
+        //gameoverPage.style.display = "none"
+        //gameBoard.style.display = "block"
          
          this.startObstacles()
   
@@ -293,7 +297,7 @@ class Game {
     
         this.time++;
     
-     }, 100) ;  
+     }, 80) ;  
 
 
 } 
@@ -339,12 +343,17 @@ class Game {
         this.cat.y < asteroid.y + asteroid.height &&
         this.cat.height + this.cat.y > asteroid.y) {
 
-            oups.play();
+            
             noNono.play();
             this.astArr.shift();
             asteroid.domObst.remove();
-           
-            window.open('./game-over.html', 'self');
+            //gameoverPage.style.display = "block"
+            //gameBoard.style.display = "none"
+
+            //mainTune.pause()
+             endGamePage();
+                
+            //window.open('./game-over.html', 'self');
             //clearInterval(timer);
             //alert("You're hit!");
 

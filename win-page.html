@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Over</title>
+    <title>You won</title>
 
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/main.css">
+
 </head>
-<body class ="gameOver">
-    <h1 id="game-over">GAME OVER</h1>
+<body class="win-page">
+    <h1>CONGRATS!</h1>
+
+    <p>Looks like catching fishes is your jam</p>
+    <img id="fish-logo" src="">
 
     <button id="play-again" onclick="myFunction()">Play Again?</button>
 
@@ -19,13 +23,15 @@ function myFunction() {
         location.replace("./index.html")
       }
 </script>
-<embed src="./ressources/oups.wav" loop="false" autostart="true" width="2"
-height="0">
-<embed src="./ressources/no-no-no.wav" loop="false" autostart="true" width="2"
-height="0">
-<embed src="./ressources/game-over song.mp3" loop="true" autostart="true" width="2"
+
+
+
+    <script src="./game.js"></script>
+    <embed src="./ressources/laugh.wav" loop="false" autostart="true" width="2"
          height="0">
-    
+
+         <embed src="./ressources/applause.wav" loop="false" autostart="true" width="2"
+         height="0">
 
 </body>
 </html>

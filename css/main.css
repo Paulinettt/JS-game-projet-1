@@ -64,7 +64,7 @@ p {
 }
     
 h1 #game-over {
-    font-size: 60px;
+    font-size: 80px;
     font-weight: 700;
     font-family: Helvetica;
     color: yellow;
@@ -77,3 +77,81 @@ h1 #game-over {
     padding: 150px;
 }
 
+.gameOver button {
+    margin: 60px;
+    padding : 20px;
+    color: black;
+    font-size: 30px;
+    font-weight: 700;
+    background-color: orange;
+}
+
+h1 #start-page {
+    font-size: 80px;
+    font-weight: 700;
+    font-family: Helvetica;
+    color: yellow;
+    text-align: center;
+    margin : 100px, 0,0,0;
+    
+}
+
+
+.startPage {
+    background-image: url("../ressources/space-background.jpeg");
+    text-align: center;
+    
+}
+
+.startPage p {
+    text-align: center;
+}
+
+ 
+
+/* startPage.classList.add("hidden") */
+/* startPage.classList.remove("hidden") */
+
+
+
+.startPage img {
+  max-width: 90px;
+  height: auto;
+}
+
+.startPage button {
+    margin : 20px;
+    padding : 20px;
+    color: black;
+    font-size: 30px;
+    font-weight: 700;
+    background-color: orange;
+}
+
+.win-page h1 {
+    font-size: 80px;
+    font-weight: 700;
+    font-family: Helvetica;
+    color: yellow;
+    text-align: center;
+    margin : 100px, 0,0,0;
+}
+
+.win-page {
+    background-image: url("../ressources/space-background.jpeg");
+    text-align: center;
+}
+
+.win-page p {
+    text-align: center;
+    margin: 50px;
+}
+
+.win-page button {
+    margin: 20px;
+    padding : 20px;
+    color: black;
+    font-size: 30px;
+    font-weight: 700;
+    background-color: orange;
+}
