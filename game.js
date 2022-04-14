@@ -1,9 +1,28 @@
+const mainTune = new Audio('./ressources/main-tune.mp3')
+mainTune.loop = true;
+//mainTune.play();
+
+
+const grabFishSoung = new Audio('./ressources/success-fish.wav')
+const laugh = new Audio('./ressources/laugh.wav')
+const meow = new Audio ('./ressources/meow.wav')
+const noNono = new Audio ('./ressources/no-no-no.wav')
+const oups = new Audio('./ressources/oups.wav')
+const gameOverSong = new Audio ('./ressources/game-over song.mp3')
+const applause = new Audio ('./ressources/applause.wav')
+
+
+
+
 class Cat {
  constructor() {
      this.x = 40;
      this.y = 50;
      this.height = 10;
      this.width = 10;
+     
+     
+     
      
  }
 
@@ -68,16 +87,17 @@ class Asteroid { //obstacle game over
    constructor(){
     this.x = 95;
     this.y = Math.floor(Math.random() * 80);
-    this.height = 20;
-    this.width = 20;
+    this.height = 30;
+    this.width = 30;
     this.astArr = [];
+    this.src ="./ressources/asteroid-icon.png"
     
 
    }
     
     moveAsteroid() {
+
     this.x--;
-    console.log("moveaster")
 } 
 
     deleteAsteroidOffScreen () {   
@@ -89,8 +109,16 @@ class Asteroid { //obstacle game over
     
    }
 
-  //detectcollisionwithcat here?
+  /* bounceOffScreen () {
+      if (this.x = 0) {
+        this.y++;
+      } else if (this.y = 100) {
+          this.y--;
+      } 
+
+
    
+} */
 }
 
 
@@ -101,6 +129,7 @@ class Fish { //obstacle +1 point
     this.height = 20;
     this.width = 20;
     this.fishArr = [];
+    this.src = "./ressources/fish-icons.png"
     
 
    }
@@ -118,6 +147,8 @@ class Fish { //obstacle +1 point
         this.domObst.remove() //remove from the dom 
     }
 } 
+
+   
 
 
  //detectcollisionwithcat here?
@@ -142,6 +173,12 @@ var timeLeft = 30 //seconds
             //delete all obstacles?
            
             console.log ("Out of time and out of fish!")
+            meow.play();
+            
+            
+            //clearInterval(interval);
+
+            
             alert("Time's Up!");
             //document.location.reload();
             
@@ -171,8 +208,10 @@ var timeLeft = 30 //seconds
 
         totalScore.innerHTML = score;
 
-        if (score === 30) {
+        if (score === 10) {
             console.log("Niiiice!")
+            applause.play();
+           
             //end game and take to winner page 
           
              //alert("YOU WON!");
@@ -183,8 +222,9 @@ var timeLeft = 30 //seconds
         }
     }
 
+    
 
-
+    
 
 class Game {
     constructor (createEl){
@@ -200,9 +240,7 @@ class Game {
         this.cat.domCat = this.create ("cat"); //cat in the DOM
         this.drawCat ();
        
-         //set countdown before obstacles?
          
-
          this.startObstacles()
   
    }
@@ -214,10 +252,10 @@ class Game {
             
      console.log("start obstacles works")
    
-         setInterval ( () => { 
+         this.interval = setInterval ( () => { 
         
     
-        if (this.time % 20 === 0) {
+        if (this.time % 50 === 0) {
             const fish = new Fish ()
             fish.domObst = this.create("fish");
             this.fishArr.push(fish);
@@ -240,9 +278,13 @@ class Game {
         });
 
         this.astArr.forEach( (asteroid) => {  
-            asteroid.moveAsteroid();
             this.drawAsteroid(asteroid); 
-            asteroid.deleteAsteroidOffScreen () ; 
+            asteroid.moveAsteroid();
+            
+            asteroid.deleteAsteroidOffScreen ();
+            
+            this.gameOverCollision (asteroid); 
+            
                    
         });
     
@@ -282,6 +324,7 @@ class Game {
       console.log ("postcollision")
             this.fishArr.shift();
             fish.domObst.remove();
+            grabFishSoung.play();
             countPoints();
             
 
@@ -294,6 +337,8 @@ class Game {
         this.cat.y < asteroid.y + asteroid.height &&
         this.cat.height + this.cat.y > asteroid.y) {
 
+            oups.play();
+            noNono.play();
             this.astArr.shift();
             asteroid.domObst.remove();
             alert("You're hit!");
@@ -342,9 +387,9 @@ drawFish (fish) {
 
  //START GAME
 
-const game = new Game (create); 
-game.startGame ();
 
+const game = new Game (create); 
+game.startGame (); 
 
 
 
