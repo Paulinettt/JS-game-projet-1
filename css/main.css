@@ -1,6 +1,7 @@
 #main-board {
     background-color: yellow;
     height : 100vh; 
+    width: 100vw;
     position:relative;
     margin:  3px solid yellow;
     background-image: url("../ressources/space-background.jpeg");
@@ -30,10 +31,11 @@ p {
 .cat { 
     
     background-color: white;
-    width: 5%;
+    width: 10%;
     height: 10%;
     position :absolute;
-   
+    border-radius: 30%;
+    
     
      
     
@@ -41,18 +43,19 @@ p {
 
 .fish {
     background-color: blue;
-    width: 5%;
+    width: 10%;
     height: 10%;
     position :absolute;
+    border-radius: 30%;
+
 }
 
 .asteroid {
-    background: black;
-    width: 7%;
+    background: red;
+    width: 10%;
     height: 10%;
     position :absolute;
+    border-radius: 30%;
+}
     
 
-}
-
- 

@@ -1,6 +1,10 @@
+
+
+//GAME SOUNDS
+
 const mainTune = new Audio('./ressources/main-tune.mp3')
 mainTune.loop = true;
-//mainTune.play();
+mainTune.play();
 
 
 const grabFishSoung = new Audio('./ressources/success-fish.wav')
@@ -12,6 +16,9 @@ const gameOverSong = new Audio ('./ressources/game-over song.mp3')
 const applause = new Audio ('./ressources/applause.wav')
 
 
+//GAME IMAGES
+
+
 
 
 class Cat {
@@ -21,8 +28,7 @@ class Cat {
      this.height = 10;
      this.width = 10;
      
-     
-     
+      
      
  }
 
@@ -85,12 +91,12 @@ document.addEventListener("keydown", function (event) {
 
 class Asteroid { //obstacle game over
    constructor(){
-    this.x = 95;
+    this.x = 90;
     this.y = Math.floor(Math.random() * 80);
-    this.height = 30;
-    this.width = 30;
+    this.height = 10;
+    this.width = 10;
     this.astArr = [];
-    this.src ="./ressources/asteroid-icon.png"
+
     
 
    }
@@ -109,27 +115,18 @@ class Asteroid { //obstacle game over
     
    }
 
-  /* bounceOffScreen () {
-      if (this.x = 0) {
-        this.y++;
-      } else if (this.y = 100) {
-          this.y--;
-      } 
-
-
    
-} */
 }
 
 
 class Fish { //obstacle +1 point
    constructor() {
-    this.x = 95;
+    this.x = 90;
     this.y = Math.floor(Math.random() * 80);
-    this.height = 20;
-    this.width = 20;
+    this.height = 10;
+    this.width = 10;
     this.fishArr = [];
-    this.src = "./ressources/fish-icons.png"
+    
     
 
    }
@@ -173,14 +170,15 @@ var timeLeft = 30 //seconds
             //delete all obstacles?
            
             console.log ("Out of time and out of fish!")
-            meow.play();
             
             
-            //clearInterval(interval);
+            
+            clearInterval(game.obstLoop);
 
             
             alert("Time's Up!");
-            //document.location.reload();
+            
+            document.location.reload();
             
         }
       }
@@ -208,22 +206,24 @@ var timeLeft = 30 //seconds
 
         totalScore.innerHTML = score;
 
-        if (score === 10) {
+        if (score === 3) {
             console.log("Niiiice!")
-            applause.play();
-           
-            //end game and take to winner page 
-          
-             //alert("YOU WON!");
 
-            //document.location.reload();
+            applause.play();
+            
+            //end game and take to winner page 
+            clearInterval(timer);
+             alert("YOU WON!");
+             //meow.play();
+
+            document.location.reload();
 
             
         }
     }
 
     
-
+      
     
 
 class Game {
@@ -236,6 +236,8 @@ class Game {
     }
   
    startGame () {
+
+        
         this.cat = new Cat(); 
         this.cat.domCat = this.create ("cat"); //cat in the DOM
         this.drawCat ();
@@ -252,7 +254,7 @@ class Game {
             
      console.log("start obstacles works")
    
-         this.interval = setInterval ( () => { 
+         this.obstLoop = setInterval ( () => { 
         
     
         if (this.time % 50 === 0) {
@@ -261,7 +263,7 @@ class Game {
             this.fishArr.push(fish);
         }
 
-        if (this.time % 40 === 0) { 
+        if (this.time % 20 === 0) { 
             const asteroid = new Asteroid ()
             asteroid.domObst = this.create ("asteroid");
             this.astArr.push(asteroid); 
@@ -284,13 +286,14 @@ class Game {
             asteroid.deleteAsteroidOffScreen ();
             
             this.gameOverCollision (asteroid); 
+           
             
                    
         });
     
         this.time++;
     
-     }, 300) ;  
+     }, 100) ;  
 
 
 } 
@@ -327,7 +330,6 @@ class Game {
             grabFishSoung.play();
             countPoints();
             
-
 }
 }  
 
@@ -341,12 +343,19 @@ class Game {
             noNono.play();
             this.astArr.shift();
             asteroid.domObst.remove();
+           
+            
+            clearInterval(timer);
             alert("You're hit!");
 
+            clearInterval(game.obstLoop);
+            document.location.reload();
+
 }
 
 
 }
+ 
  
 
 
@@ -386,10 +395,10 @@ drawFish (fish) {
 
 
  //START GAME
+ const game = new Game (create); 
+ game.startGame ();  
 
 
-const game = new Game (create); 
-game.startGame (); 
 
 
 
