@@ -176,9 +176,9 @@ var timeLeft = 30 //seconds
             clearInterval(game.obstLoop);
 
             
-            alert("Time's Up!");
-            
-            document.location.reload();
+            //alert("Time's Up!");
+            window.open('./game-over.html', 'self');
+            //document.location.reload();
             
         }
       }
@@ -344,12 +344,12 @@ class Game {
             this.astArr.shift();
             asteroid.domObst.remove();
            
-            
-            clearInterval(timer);
-            alert("You're hit!");
+            window.open('./game-over.html', 'self');
+            //clearInterval(timer);
+            //alert("You're hit!");
 
-            clearInterval(game.obstLoop);
-            document.location.reload();
+            //clearInterval(game.obstLoop);
+            //document.location.reload();
 
 }
 

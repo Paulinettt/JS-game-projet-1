@@ -57,5 +57,23 @@ p {
     position :absolute;
     border-radius: 30%;
 }
+
+.gameOver {
+    background-image: url("../ressources/space-background.jpeg");
+
+}
     
+h1 #game-over {
+    font-size: 60px;
+    font-weight: 700;
+    font-family: Helvetica;
+    color: yellow;
+    text-align: center;
+    margin : 100px;
+}
+
+.gameOver  {
+    text-align: center;
+    padding: 150px;
+}
 
