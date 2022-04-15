@@ -1,413 +1,315 @@
-
-
 //GAME SOUNDS
 
-const mainTune = new Audio('./ressources/main-tune.mp3')
+const mainTune = new Audio("./ressources/main-tune.mp3");
 mainTune.loop = true;
-mainTune.volume = 0.4;
+mainTune.volume = 0.3;
 mainTune.play();
 
-
-const grabFishSoung = new Audio('./ressources/success-fish.wav')
-const laugh = new Audio('./ressources/laugh.wav')
-const meow = new Audio ('./ressources/meow.wav')
-const noNono = new Audio ('./ressources/no-no-no.wav')
-const oups = new Audio('./ressources/oups.wav')
-const gameOverSong = new Audio ('./ressources/game-over song.mp3')
-const applause = new Audio ('./ressources/applause.wav')
-
-
+const grabFishSoung = new Audio("./ressources/success-fish.wav");
+const laugh = new Audio("./ressources/laugh.wav");
+const meow = new Audio("./ressources/meow.wav");
+const noNono = new Audio("./ressources/no-no-no.wav");
+const oups = new Audio("./ressources/oups.wav");
+const gameOverSong = new Audio("./ressources/game-over song.mp3");
+const applause = new Audio("./ressources/applause.wav");
 
 //const gameoverPage = document.getElementById("gameover")
 //const gameBoard = document.querySelector("#main-board")
 
 //GAME IMAGES
 
-
-
-
 class Cat {
- constructor() {
-     this.x = 40;
-     this.y = 50;
-     this.height = 10;
-     this.width = 10;
-     
-      
-     
- }
+  constructor() {
+    this.x = 40;
+    this.y = 50;
+    this.height = 10;
+    this.width = 10;
+  }
 
- moveLeft() {
+  moveLeft() {
     this.x--;
     if (this.x < 0) {
-        this.x = 0;
+      this.x = 0;
     }
-}
+  }
 
-moveRight() {
+  moveRight() {
     this.x++;
     if (this.x > 90) {
-        this.x = 90;
+      this.x = 90;
     }
-}
+  }
 
-moveDown () {
+  moveDown() {
     this.y--;
     if (this.y < 0) {
-        this.y = 0;
+      this.y = 0;
     }
-}
+  }
 
-moveUp () {
-    this.y++
+  moveUp() {
+    this.y++;
     if (this.y > 80) {
-        this.y = 80;
+      this.y = 80;
     }
+  }
 }
-
-
-
-}
-
 
 //MOVING THE CAT
 
-document.addEventListener("keydown", function (event) {  
+document.addEventListener("keydown", function (event) {
+  switch (event.key) {
+    case "ArrowRight":
+      game.moveCat("right");
+      break;
+    case "ArrowLeft":
+      game.moveCat("left");
+      break;
+    case "ArrowDown":
+      game.moveCat("down");
+      break;
+    case "ArrowUp":
+      game.moveCat("up");
+      break;
+  }
+});
 
-    switch(event.key){
-       case "ArrowRight":
-           game.moveCat ("right");
-           break;   
-       case "ArrowLeft":
-           game.moveCat ("left");
-           break;
-       case "ArrowDown":
-           game.moveCat ("down");
-           break;
-       case "ArrowUp":
-           game.moveCat ("up");
-           break;       
-   }
-
-}); 
-
-
-
-
-class Asteroid { //obstacle game over
-   constructor(){
+class Asteroid {
+  constructor() {
     this.x = 90;
     this.y = Math.floor(Math.random() * 80);
     this.height = 10;
     this.width = 10;
     this.astArr = [];
+  }
 
-    
-
-   }
-    
-    moveAsteroid() {
-
+  moveAsteroid() {
     this.x--;
-} 
+  }
 
-    deleteAsteroidOffScreen () {   
-    if (this.x < 0 ){
-        this.astArr.shift() 
-        this.domObst.remove() //remove from the dom 
-    
-     } 
-    
-   }
-
-   
+  deleteAsteroidOffScreen() {
+    if (this.x < 0) {
+      this.astArr.shift();
+      this.domObst.remove(); 
+    }
+  }
 }
 
-
-class Fish { //obstacle +1 point
-   constructor() {
+class Fish {
+  constructor() {
     this.x = 90;
     this.y = Math.floor(Math.random() * 80);
     this.height = 10;
     this.width = 10;
     this.fishArr = [];
-    
-    
+  }
 
-   }
-
-
-   moveFish() {
+  moveFish() {
     this.x--;
-    console.log("movefish")
-    
-} 
+    console.log("movefish");
+  }
 
-    deleteFishOffScreen () {
-    if (this.x < 0 ){
-        this.fishArr.shift() 
-        this.domObst.remove() //remove from the dom 
+  deleteFishOffScreen() {
+    if (this.x < 0) {
+      this.fishArr.shift();
+      this.domObst.remove(); //remove from the dom
     }
+  }
 }
 
+// SET TIMER
+
+var timeLeft = 20; //seconds
+
+let counter = document.getElementById("timer");
+
+function updateTimer() {
+  timeLeft = timeLeft - 1;
+  if (timeLeft >= 0) counter.innerHTML = timeLeft;
+  else {
+   
+
+    endGamePage();
+  
+  }
 }
 
-// SET TIMER 
+function startTimer() {
+  // setInterval will call updateTimer
 
+  timer = setInterval(updateTimer, 1000);
+  updateTimer();
+}
 
-var timeLeft = 20 //seconds
+startTimer();
+updateTimer();
 
-    let counter = document.getElementById("timer")
+// SET SCORE
 
-    function updateTimer() {
-        timeLeft = timeLeft - 1;
-        if(timeLeft >= 0)
-        counter.innerHTML = timeLeft
-        else {
-            //remove obstacles and game over?
-            //delete all obstacles?
-            //clearInterval(game.obstLoop);
+let totalScore = document.getElementById("total-points");
+var score = 0;
 
-            endGamePage();
-            //alert("Time's Up!");
-            //window.open('./game-over.html', 'self');
-            //document.location.reload();
-            
-        }
-      }
+function countPoints() {
+  score++;
 
+  totalScore.innerHTML = score;
 
-      function startTimer() {
-        // setInterval will call updateTimer
-       
-        timer = setInterval(updateTimer, 1000);
-        updateTimer();
-      }
-
-      startTimer()
-      updateTimer()
-
-
-     // SET SCORE
-
-      let totalScore = document.getElementById("total-points")
-      var score = 0;
-
-      function countPoints() {
-
-        score++;
-
-        totalScore.innerHTML = score;
-
-        if (score === 3) {
-            
-
-            meow.play();
-            
-            //end game and take to winner page 
-            winPage();
-             
-
-            //document.location.reload();
-
-            
-        }
-    }
+  if (score === 3) {
+    meow.play();
 
     
-    function endGamePage() {
-        location.replace("./game-over.html")
-      }
+    winPage();
 
-      function winPage() {
-        location.replace("./win-page.html")
-      }
     
+  }
+}
+
+function endGamePage() {
+  location.replace("./game-over.html");
+}
+
+function winPage() {
+  location.replace("./win-page.html");
+}
 
 class Game {
-    constructor (createEl){
-        this.time = 0;
-        this.astArr = [];
-        this.fishArr = [];
-        this.create = createEl;
-        
-    }
-  
-   startGame () {
+  constructor(createEl) {
+    this.time = 0;
+    this.astArr = [];
+    this.fishArr = [];
+    this.create = createEl;
+  }
 
-        
-        this.cat = new Cat(); 
-        this.cat.domCat = this.create ("cat"); //cat in the DOM
-        this.drawCat ();
-        //gameoverPage.style.display = "none"
-        //gameBoard.style.display = "block"
-         
-         this.startObstacles()
-  
-   }
-
-
-
-
-    startObstacles (){
-            
-     console.log("start obstacles works")
-   
-         this.obstLoop = setInterval ( () => { 
-        
+  startGame() {
+    this.cat = new Cat();
+    this.cat.domCat = this.create("cat"); 
+    this.drawCat();
     
-        if (this.time % 50 === 0) {
-            const fish = new Fish ()
-            fish.domObst = this.create("fish");
-            this.fishArr.push(fish);
-        }
 
-        if (this.time % 20 === 0) { 
-            const asteroid = new Asteroid ()
-            asteroid.domObst = this.create ("asteroid");
-            this.astArr.push(asteroid); 
-            
-         }
+    this.startObstacles();
+  }
 
+  startObstacles() {
+    console.log("start obstacles works");
 
-         this.fishArr.forEach( (fish) => {  
-            fish.moveFish(); 
-            this.drawFish(fish);
-            fish.deleteFishOffScreen ();
-            this.detectCollisionWithCat(fish);
-            
-        });
+    this.obstLoop = setInterval(() => {
+      if (this.time % 50 === 0) {
+        const fish = new Fish();
+        fish.domObst = this.create("fish");
+        this.fishArr.push(fish);
+      }
 
-        this.astArr.forEach( (asteroid) => {  
-            this.drawAsteroid(asteroid); 
-            asteroid.moveAsteroid();
-            
-            asteroid.deleteAsteroidOffScreen ();
-            
-            this.gameOverCollision (asteroid); 
-           
-            
-                   
-        });
-    
-        this.time++;
-    
-     }, 80) ;  
+      if (this.time % 20 === 0) {
+        const asteroid = new Asteroid();
+        asteroid.domObst = this.create("asteroid");
+        this.astArr.push(asteroid);
+      }
 
+      this.fishArr.forEach((fish) => {
+        fish.moveFish();
+        this.drawFish(fish);
+        fish.deleteFishOffScreen();
+        this.detectCollisionWithCat(fish);
+      });
 
-} 
+      this.astArr.forEach((asteroid) => {
+        this.drawAsteroid(asteroid);
+        asteroid.moveAsteroid();
 
+        asteroid.deleteAsteroidOffScreen();
 
- moveCat(direction) {
-    if(direction === "left"){
-        this.cat.moveLeft();
-        
-    } else if (direction === "right"){
-        this.cat.moveRight();
-        
+        this.gameOverCollision(asteroid);
+      });
+
+      this.time++;
+    }, 80);
+  }
+
+  moveCat(direction) {
+    if (direction === "left") {
+      this.cat.moveLeft();
+    } else if (direction === "right") {
+      this.cat.moveRight();
     } else if (direction === "up") {
-        this.cat.moveUp();
-
+      this.cat.moveUp();
     } else if (direction === "down") {
-        this.cat.moveDown();
+      this.cat.moveDown();
     }
-        this.drawCat();
-    
-}
+    this.drawCat();
+  }
 
- detectCollisionWithCat(fish){
+  detectCollisionWithCat(fish) {
+    console.log("collision");
 
-    console.log ("collision")
-        
-    if (this.cat.x < fish.x + fish.width &&
-        this.cat.x + this.cat.width > fish.x &&
-        this.cat.y < fish.y + fish.height &&
-        this.cat.height + this.cat.y > fish.y) {
-      console.log ("postcollision")
-            this.fishArr.shift();
-            fish.domObst.remove();
-            grabFishSoung.play();
-            countPoints();
-            
-}
-}  
+    if (
+      this.cat.x < fish.x + fish.width &&
+      this.cat.x + this.cat.width > fish.x &&
+      this.cat.y < fish.y + fish.height &&
+      this.cat.height + this.cat.y > fish.y
+    ) {
+      console.log("postcollision");
+      this.fishArr.shift();
+      fish.domObst.remove();
+      grabFishSoung.play();
+      countPoints();
+    }
+  }
 
-   gameOverCollision (asteroid){
-    if (this.cat.x < asteroid.x + asteroid.width &&
-        this.cat.x + this.cat.width > asteroid.x &&
-        this.cat.y < asteroid.y + asteroid.height &&
-        this.cat.height + this.cat.y > asteroid.y) {
-
-            
-            noNono.play();
-            this.astArr.shift();
-            asteroid.domObst.remove();
-            //gameoverPage.style.display = "block"
-            //gameBoard.style.display = "none"
-
-            //mainTune.pause()
-             endGamePage();
-                
-            //window.open('./game-over.html', 'self');
-            //clearInterval(timer);
-            //alert("You're hit!");
-
-            //clearInterval(game.obstLoop);
-            //document.location.reload();
-
-}
-
-
-}
- 
- 
-
-
- drawCat () {
-     this.cat.domCat.style.left = this.cat.x + "%";
-     this.cat.domCat.style.bottom = this.cat.y + "%"; 
+  gameOverCollision(asteroid) {
+    if (
+      this.cat.x < asteroid.x + asteroid.width &&
+      this.cat.x + this.cat.width > asteroid.x &&
+      this.cat.y < asteroid.y + asteroid.height &&
+      this.cat.height + this.cat.y > asteroid.y
+    ) {
+      noNono.play();
+      this.astArr.shift();
+      asteroid.domObst.remove();
      
-}
+      endGamePage();
 
-drawAsteroid (asteroid) {
+      
+    }
+  }
+
+  drawCat() {
+    this.cat.domCat.style.left = this.cat.x + "%";
+    this.cat.domCat.style.bottom = this.cat.y + "%";
+  }
+
+  drawAsteroid(asteroid) {
     asteroid.domObst.style.left = asteroid.x + "%";
-    asteroid.domObst.style.bottom = asteroid.y + "%"; 
-    console.log("drawasteroid")
-} 
+    asteroid.domObst.style.bottom = asteroid.y + "%";
+    console.log("drawasteroid");
+  }
 
-drawFish (fish) {
+  drawFish(fish) {
     fish.domObst.style.left = fish.x + "%";
     fish.domObst.style.bottom = fish.y + "%";
-    console.log ("drawfish")
+    console.log("drawfish");
+  }
 }
-  
-
-}
-
 
 // CREATE ELEMENTS
 
+function create(className) {
+  //asteroid/fish/cat
+  const mainBoard = document.getElementById("main-board");
+  const newElm = document.createElement("div");
+  newElm.className = className;
+  mainBoard.appendChild(newElm);
+  return newElm;
+}
 
-    function create (className) { //asteroid/fish/cat 
-    const mainBoard = document.getElementById("main-board");
-    const newElm = document.createElement("div");
-    newElm.className = className;
-    mainBoard.appendChild(newElm);
-    return newElm;
-    
- }
+/* function createImage () {
+      const mainBoard = document.getElementById("main-board");
+      const newImg = document.createElement("img");
+      newImg.className = className;
+      mainBoard.appendChild(newImg);
+      return newImg;
+}
+ */
 
-
- //START GAME
- const game = new Game (create); 
- game.startGame ();  
-
-
-
-
-
-
-
-
-
-
+//START GAME
+const game = new Game(create);
+game.startGame();
