@@ -4,12 +4,11 @@
 
 ## INSTRUCTIONS
 
-
 This is a catching game with asteroids to avoid in space.
 Use the arrow keys to catch fishes for Sophie in a limited time and avoid the asteroids to survive.
 
 If you collide with a single asteroid, the game ends.
-If you catch enough fishes before the time runs out, you win.
+If you catch enough fishes before the time runs out, you win!
 
 
 # BUILT WITH
@@ -20,10 +19,9 @@ If you catch enough fishes before the time runs out, you win.
 
 ## FUTURE UPDATES
 
-- [] Implement images for elements
 - [] Implement levels
-- [] Adding additional obstacles
-- [] Having some obstacles bounce off the screen to increase difficulty
+- [] Add additional obstacles
+- [] Have obstacles bounce off the screen to increase difficulty
 
 
 
