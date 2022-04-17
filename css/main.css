@@ -30,9 +30,9 @@ p {
 
 .cat { 
     
-    background-color: white;
-    width: 10%;
-    height: 10%;
+    background-color: transparent;
+    width: 15%;
+    height: 15%;
     position :absolute;
     border-radius: 30%;
     
@@ -42,7 +42,7 @@ p {
 } 
 
 .fish {
-    background-color: blue;
+    background-color: transparent;
     width: 10%;
     height: 10%;
     position :absolute;
@@ -51,7 +51,7 @@ p {
 }
 
 .asteroid {
-    background: red;
+    background: transparent;
     width: 10%;
     height: 10%;
     position :absolute;

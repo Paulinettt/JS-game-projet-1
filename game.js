@@ -13,9 +13,6 @@ const oups = new Audio("./ressources/oups.wav");
 const gameOverSong = new Audio("./ressources/game-over song.mp3");
 const applause = new Audio("./ressources/applause.wav");
 
-//const gameoverPage = document.getElementById("gameover")
-//const gameBoard = document.querySelector("#main-board")
-
 //GAME IMAGES
 
 class Cat {
@@ -127,20 +124,15 @@ function updateTimer() {
   timeLeft = timeLeft - 1;
   if (timeLeft >= 0) counter.innerHTML = timeLeft;
   else {
-   
-
-    endGamePage();
-  
+  endGamePage();
   }
 }
 
 function startTimer() {
   // setInterval will call updateTimer
-
   timer = setInterval(updateTimer, 1000);
   updateTimer();
 }
-
 startTimer();
 updateTimer();
 
@@ -156,11 +148,7 @@ function countPoints() {
 
   if (score === 3) {
     meow.play();
-
-    
-    winPage();
-
-    
+    winPage();   
   }
 }
 
@@ -183,25 +171,27 @@ class Game {
   startGame() {
     this.cat = new Cat();
     this.cat.domCat = this.create("cat"); 
-    this.drawCat();
+    this.cat.domCat.src = "./ressources/sophie.logo.png"
     
-
+    this.drawCat();
     this.startObstacles();
   }
 
   startObstacles() {
-    console.log("start obstacles works");
+
 
     this.obstLoop = setInterval(() => {
       if (this.time % 50 === 0) {
         const fish = new Fish();
         fish.domObst = this.create("fish");
+        fish.domObst.src = "./ressources/fish-icons.png"
         this.fishArr.push(fish);
       }
 
       if (this.time % 20 === 0) {
         const asteroid = new Asteroid();
         asteroid.domObst = this.create("asteroid");
+        asteroid.domObst.src = "./ressources/asteroid-icon.png"
         this.astArr.push(asteroid);
       }
 
@@ -239,7 +229,6 @@ class Game {
   }
 
   detectCollisionWithCat(fish) {
-    console.log("collision");
 
     if (
       this.cat.x < fish.x + fish.width &&
@@ -267,14 +256,16 @@ class Game {
       asteroid.domObst.remove();
      
       endGamePage();
-
       
     }
-  }
 
+    // DRAW ELEMENTS
+  }
+  
   drawCat() {
     this.cat.domCat.style.left = this.cat.x + "%";
     this.cat.domCat.style.bottom = this.cat.y + "%";
+
   }
 
   drawAsteroid(asteroid) {
@@ -295,21 +286,13 @@ class Game {
 function create(className) {
   //asteroid/fish/cat
   const mainBoard = document.getElementById("main-board");
-  const newElm = document.createElement("div");
+  const newElm = document.createElement("img");
   newElm.className = className;
   mainBoard.appendChild(newElm);
   return newElm;
 }
 
-/* function createImage () {
-      const mainBoard = document.getElementById("main-board");
-      const newImg = document.createElement("img");
-      newImg.className = className;
-      mainBoard.appendChild(newImg);
-      return newImg;
-}
- */
 
-//START GAME
+// START GAME
 const game = new Game(create);
 game.startGame();
