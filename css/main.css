@@ -41,6 +41,7 @@ p {
     
 } 
 
+
 .fish {
     background-color: transparent;
     width: 10%;
@@ -77,6 +78,8 @@ h1 #game-over {
     padding: 150px;
 }
 
+
+
 .gameOver button {
     margin: 60px;
     padding : 20px;
@@ -109,15 +112,27 @@ h1 #start-page {
 
  
 
-/* startPage.classList.add("hidden") */
-/* startPage.classList.remove("hidden") */
-
 
 
 .startPage img {
   max-width: 90px;
   height: auto;
 }
+
+.startPage #sophie-logo{
+    max-width: 150px;
+  height: auto;
+  animation: rotation 3s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
 
 .startPage button {
     margin : 20px;

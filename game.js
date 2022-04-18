@@ -2,7 +2,6 @@
 
 const mainTune = new Audio("./ressources/main-tune.mp3");
 mainTune.loop = true;
-mainTune.volume = 0.3;
 mainTune.play();
 
 const grabFishSoung = new Audio("./ressources/success-fish.wav");
