@@ -25,7 +25,6 @@ If you catch enough fishes before the time runs out, you win!
 
 
 
-Here is the live link: https://paulinettt.github.io/JS-game-projet-1/index.html
-
+Here is the live link: https://paulinettt.github.io/Space-Sophie
 
 
