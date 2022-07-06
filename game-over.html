@@ -19,11 +19,20 @@ height="0">
 <body class ="gameOver">
     <h1 id="game-over">GAME OVER</h1>
 
+   <div class="buttons"> 
     <button id="play-again" onclick="myFunction()">Play Again?</button>
-
+    <button id="instructions" onclick="myFunctionInstr()">Instructions</button>
+ </div>
+ <div class="animation-sophie">
+    <img id="sophie-logo" src="./ressources/sophie.logo.png">
+ </div>
  <script> 
 function myFunction() {
         location.replace("./main-game.html")
+      }
+
+      function myFunctionInstr() {
+        location.replace("./index.html")
       }
 </script>
     
