@@ -5,8 +5,12 @@
     position:relative;
     margin:  3px solid yellow;
     background-image: url("../ressources/space-background.jpeg");
+    
 
 }
+
+
+
 
 h1 {
     font-size: 80px;
@@ -14,7 +18,7 @@ h1 {
     font-family: Helvetica;
     color: yellow;
     text-align: center;
-    padding : 30px;
+    padding : 50px;
 }
 
 p {
@@ -110,13 +114,13 @@ p {
 }
 
 
-h1 #start-page {
-    font-size: 80px;
+ #start-page {
+    font-size: 70px;
     font-weight: 700;
     font-family: Helvetica;
     color: yellow;
     text-align: center;
-    margin : 100px, 0,0,0;
+    margin : 20px;
     
 }
 
@@ -177,6 +181,7 @@ h1 #start-page {
         font-family: Helvetica;
         color: yellow;
         text-align: center;
+        margin: 10px;
         
     }
     p {
@@ -188,6 +193,15 @@ h1 #start-page {
         padding : 20px;
         
     
+    }
+
+    .startPage #start-game {
+        margin : 10px;
+        padding : 10px;
+        color: black;
+        font-size: 20px;
+        font-weight: 700;
+        background-color: orange;
     }
 
      #asteroids {
@@ -203,6 +217,16 @@ h1 #start-page {
         max-width: 100px;
       height: auto;
       animation: rotation 3s infinite linear;
+    }
+
+    #start-page {
+        font-size: 30px;
+        font-weight: 700;
+        font-family: Helvetica;
+        color: yellow;
+        text-align: center;
+        margin : 10px;
+        
     }
 
 }
@@ -224,7 +248,7 @@ h1 #start-page {
   }
 
 .startPage button {
-    margin : 20px;
+    margin : 30px;
     padding : 20px;
     color: black;
     font-size: 30px;

@@ -9,7 +9,7 @@ const laugh = new Audio("./ressources/laugh.wav");
 const meow = new Audio("./ressources/meow.wav");
 const noNono = new Audio("./ressources/no-no-no.wav");
 const oups = new Audio("./ressources/oups.wav");
-const gameOverSong = new Audio("./ressources/game-over song.mp3");
+const gameOverSong = new Audio("./ressources/game-over-tune.mp3");
 const applause = new Audio("./ressources/applause.wav");
 
 //GAME IMAGES
@@ -86,7 +86,7 @@ class Asteroid {
   deleteAsteroidOffScreen() {
     if (this.x < 0) {
       this.astArr.shift();
-      this.domObst.remove(); 
+      this.domObst.remove();
     }
   }
 }
@@ -119,11 +119,15 @@ var timeLeft = 20; //seconds
 
 let counter = document.getElementById("timer");
 
+function endGamePage() {
+  location.replace("./game-over.html");
+}
+
 function updateTimer() {
   timeLeft = timeLeft - 1;
   if (timeLeft >= 0) counter.innerHTML = timeLeft;
   else {
-  endGamePage();
+    endGamePage();
   }
 }
 
@@ -140,23 +144,21 @@ updateTimer();
 let totalScore = document.getElementById("total-points");
 var score = 0;
 
+function winPage() {
+
+  location.replace("./win-page.html");
+ 
+}
+
 function countPoints() {
   score++;
 
   totalScore.innerHTML = score;
 
   if (score === 3) {
-    meow.play();
-    winPage();   
+    //meow.play();
+    winPage();
   }
-}
-
-function endGamePage() {
-  location.replace("./game-over.html");
-}
-
-function winPage() {
-  location.replace("./win-page.html");
 }
 
 class Game {
@@ -169,28 +171,26 @@ class Game {
 
   startGame() {
     this.cat = new Cat();
-    this.cat.domCat = this.create("cat"); 
-    this.cat.domCat.src = "./ressources/sophie.logo.png"
-    
+    this.cat.domCat = this.create("cat");
+    this.cat.domCat.src = "./ressources/sophie.logo.png";
+
     this.drawCat();
     this.startObstacles();
   }
 
   startObstacles() {
-
-
     this.obstLoop = setInterval(() => {
       if (this.time % 50 === 0) {
         const fish = new Fish();
         fish.domObst = this.create("fish");
-        fish.domObst.src = "./ressources/fish-icons.png"
+        fish.domObst.src = "./ressources/fish-icons.png";
         this.fishArr.push(fish);
       }
 
       if (this.time % 20 === 0) {
         const asteroid = new Asteroid();
         asteroid.domObst = this.create("asteroid");
-        asteroid.domObst.src = "./ressources/asteroid-icon.png"
+        asteroid.domObst.src = "./ressources/asteroid-icon.png";
         this.astArr.push(asteroid);
       }
 
@@ -228,14 +228,13 @@ class Game {
   }
 
   detectCollisionWithCat(fish) {
-
     if (
       this.cat.x < fish.x + fish.width &&
       this.cat.x + this.cat.width > fish.x &&
       this.cat.y < fish.y + fish.height &&
       this.cat.height + this.cat.y > fish.y
     ) {
-      console.log("postcollision");
+      //console.log("postcollision");
       this.fishArr.shift();
       fish.domObst.remove();
       grabFishSoung.play();
@@ -250,21 +249,20 @@ class Game {
       this.cat.y < asteroid.y + asteroid.height &&
       this.cat.height + this.cat.y > asteroid.y
     ) {
-      noNono.play();
-      this.astArr.shift();
-      asteroid.domObst.remove();
-     
+      //noNono.play();
+
+      //this.astArr.shift();
+      //asteroid.domObst.remove();
+
       endGamePage();
-      
     }
 
     // DRAW ELEMENTS
   }
-  
+
   drawCat() {
     this.cat.domCat.style.left = this.cat.x + "%";
     this.cat.domCat.style.bottom = this.cat.y + "%";
-
   }
 
   drawAsteroid(asteroid) {
@@ -290,7 +288,6 @@ function create(className) {
   mainBoard.appendChild(newElm);
   return newElm;
 }
-
 
 // START GAME
 const game = new Game(create);

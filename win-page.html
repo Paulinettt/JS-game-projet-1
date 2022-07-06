@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>You won</title>
 
-    <link rel="stylesheet" href="./css/reset.css">
-    <link rel="stylesheet" href="./css/main.css">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>You won</title>
+
+     <link rel="stylesheet" href="./css/reset.css">
+     <link rel="stylesheet" href="./css/main.css">
 
 </head>
 
+<embed src="./ressources/intro-tune.mp3" loop="true" autostart="true" width="2" height="0">
 
-<script src="./game.js"></script>
-<embed src="./ressources/laugh.wav" loop="false" autostart="true" width="2"
-     height="0">
+<embed src="./ressources/laugh.wav" loop="false" autostart="true" width="2" height="0">
 
-<embed src="./ressources/applause.wav" loop="false" autostart="true" width="2"
-     height="0">
+<embed src="./ressources/applause.wav" loop="false" autostart="true" width="2" height="0">
 
 <body class="win-page">
-    <h1>CONGRATS!</h1>
+     <h1>CONGRATS!</h1>
 
-    <p>Looks like catching fishes is your jam</p>
-    <img id="fish-logo" src="">
+     <p>Looks like catching fishes is your jam</p>
+     <img id="fish-logo" src="">
 
-    <button id="play-again" onclick="myFunction()">Play Again?</button>
+     <button id="play-again" onclick="myFunction()">Play Again?</button>
 
- <script> 
-function myFunction() {
-        location.replace("./main-game.html")
-      }
-</script>
-
-
-
+     <script>
+          function myFunction() {
+               location.replace("./main-game.html")
+          }
+     </script>
 
 </body>
+
 </html>
