@@ -289,6 +289,9 @@ function create(className) {
   return newElm;
 }
 
+
+
 // START GAME
 const game = new Game(create);
 game.startGame();
+document.getElementsByClassName("flashing")[1].style.fontSize = "70px";
